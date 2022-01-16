@@ -5,7 +5,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      ResourceGroupName: test1
+      ResourceGroupName: test2
       ResourceGroupLocation: "eastus"
     steps:
     - uses: actions/checkout@master
@@ -27,7 +27,7 @@ jobs:
           
             #Keyvault Paremeters
             KeyVaultName="databrickkeyvaultnad7124"
-            RGName="test1"
+            RGName="test2"
             Subscriptions=$subs
             Location="EastUS"
             
