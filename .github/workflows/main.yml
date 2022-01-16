@@ -24,3 +24,4 @@ jobs:
             scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
             az ad app create --display-name $appName --homepage http://sp-static/  --identifier-uris sp-static
             az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
+          fi
