@@ -1,0 +1,26 @@
+on: [push]
+name: AzureARMSPs
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      ResourceGroupName: test1
+      ResourceGroupLocation: "eastus"
+    steps:
+    - uses: actions/checkout@master
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS}}
+    - uses: Azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          subs="63c2f8f9-a3f8-4cbf-aaeb-341fc75caaa3"
+          az account set --subscription $subs
+          if $(az group exists --name ${{ env.ResourceGroupName }}) ; then
+            echo "Azure resource group already exists, skipping creation..."
+            appName="sp-static"
+            scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
+            az ad app create --display-name $appName --homepage http://sp-static/  --identifier-uris sp-static
+            az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
