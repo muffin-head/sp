@@ -24,3 +24,12 @@ jobs:
             scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
             az ad app create --display-name $appName --homepage http://sp-static/  --identifier-uris sp-static
             az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
+            
+          else
+            az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
+            appName="sp-static"
+            scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
+            az ad app create --display-name $appName --homepage http://sp-static/  --identifier-uris sp-static
+            az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
+          fi
+            
