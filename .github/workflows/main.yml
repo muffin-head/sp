@@ -25,7 +25,9 @@ jobs:
           fi
             #SP Paremeter
             
-            
+            ResourceGroupName=test-rg
+            ResourceGroupLocation=eastus
+            appName=muffins
             az account set --subscription b991a45f-3f47-452a-8ff0-45969784e75e
             
             scope="/subscriptions/b991a45f-3f47-452a-8ff0-45969784e75e/resourceGroups/$ResourceGroupName"
