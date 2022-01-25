@@ -7,7 +7,7 @@ jobs:
     env:
       ResourceGroupName: test-rg
       ResourceGroupLocation: "eastus"
-      appName: "sp-static-newww"
+      appName: "sp"
     steps:
     - uses: actions/checkout@master
     - uses: azure/login@v1
@@ -29,5 +29,5 @@ jobs:
             az account set --subscription b991a45f-3f47-452a-8ff0-45969784e75e
             
             scope="/subscriptions/b991a45f-3f47-452a-8ff0-45969784e75e/resourceGroups/$ResourceGroupName"
-            az ad app create --display-name $appName --homepage http://sp-static-newww/  --identifier-uris $appName
+            az ad app create --display-name $appName --homepage http://spstaticnewww/  --identifier-uris $appName
             az ad sp create-for-rbac --name $appName --role Owner --scopes $scope --sdk-auth
