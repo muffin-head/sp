@@ -22,8 +22,8 @@ jobs:
             echo "Azure resource group already exists, skipping creation..."
             appName="muf1998"
             scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
-            az ad app create --display-name $appName --homepage http://muf1998/  --identifier-uris muf1998
-            az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
+            # az ad app create --display-name $appName --homepage http://muf1998/  --identifier-uris muf1998
+            az ad sp create-for-rbac --name $appName --role Owner --scopes $scope --sdk-auth
             
           else
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
