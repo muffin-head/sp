@@ -1,12 +1,13 @@
 on: [push]
-name: AzureARMSPs
+name: AzureARMSP
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      ResourceGroupName: test1
+      ResourceGroupName: test-rg
       ResourceGroupLocation: "eastus"
+      appName: "sp"
     steps:
     - uses: actions/checkout@master
     - uses: azure/login@v1
@@ -16,20 +17,19 @@ jobs:
       with:
         inlineScript: |
           #!/bin/bash
-          subs=b991a45f-3f47-452a-8ff0-45969784e75e
-          az account set --subscription $subs
           if $(az group exists --name ${{ env.ResourceGroupName }}) ; then
             echo "Azure resource group already exists, skipping creation..."
-            appName="muf1998"
-            scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
-            # az ad app create --display-name $appName --homepage http://muf1998/  --identifier-uris muf1998
-            az ad sp create-for-rbac --name $appName --role Owner --scopes $scope --sdk-auth
-            
           else
             az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
-            appName="muf1998"
-            scope="/subscriptions/$subs/resourceGroups/$ResourceGroupName"
-            az ad app create --display-name $appName --homepage http://muf1998/  --identifier-uris muf1998
-            az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
+            echo "Azure resource group created"
           fi
+            #SP Paremeter
             
+            ResourceGroupName=test-rg
+            ResourceGroupLocation=eastus
+            appName=muffins
+            az account set --subscription b991a45f-3f47-452a-8ff0-45969784e75e
+            
+            scope="/subscriptions/b991a45f-3f47-452a-8ff0-45969784e75e/resourceGroups/$ResourceGroupName"
+            az ad app create --display-name $appName --homepage http://spstaticnewww/  --identifier-uris $appName
+            az ad sp create-for-rbac --name $appName --role Owner --scopes $scope --sdk-auth
